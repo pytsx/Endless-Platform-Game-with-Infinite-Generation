@@ -1,6 +1,6 @@
 # JS Platform Game
 
-[demo][platform-game-seven.vercel.app](https://platform-game-seven.vercel.app/)
+[#demo]: [platform-game-seven.vercel.app](https://platform-game-seven.vercel.app/)
 
 [index.js](doc/index%20js%20fe4cc0f42aca47edb1e4c217c3a8dc05.md)
 
