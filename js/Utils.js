@@ -17,6 +17,9 @@ function handleKeyup(e) {
     case 'd':
       keys.d.pressed = false
       break;
+    case 'r':
+      keys.r.pressed = false
+      break
   }
 }
 
@@ -44,6 +47,12 @@ function handleKeydown(e) {
       countJump++
       keys.w.pressed = true
       break;
+    case 'r':
+      keys.r.pressed = true
+      break
+    case 'p':
+      keys.p.pressed = true
+      break
   }
 }
 

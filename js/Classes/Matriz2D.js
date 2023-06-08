@@ -1,7 +1,7 @@
 class Matriz2D {
   constructor() {
     this.matriz = []
-    this.matrizGenerated = []
+    // this.matrizGenerated = []
   }
 
   init({ x = 32, y = 18 }) {
@@ -12,7 +12,6 @@ class Matriz2D {
       } else {
         row = Array(x).fill(ENV.collidable.world_border.key)
       }
-
       row[0] = ENV.collidable.world_border.key
       row[x - 1] = ENV.collidable.world_border.key
       this.matriz.push(row)
@@ -45,7 +44,7 @@ class Matriz2D {
     secondHalf = this.mountHalfMatriz(secondHalf, 2)
 
     let mountedMatriz = [...firstHalf, ...secondHalf]
-    this.matrizGenerated.push(mountedMatriz)
+    // this.matrizGenerated.push(mountedMatriz)
 
     return mountedMatriz;
   }
@@ -87,18 +86,13 @@ class Matriz2D {
     return half
   }
 
-
   sliceMatriz(matriz) {
     let halfIndex = matriz.length / 2
-
     let firstHalf = matriz.slice(0, halfIndex)
     let secondHalf = matriz.slice(halfIndex)
-
     return {
       firstHalf,
       secondHalf
     }
   }
-
-
 }

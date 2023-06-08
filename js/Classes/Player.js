@@ -146,7 +146,6 @@ class Player extends Sprite {
     }
   }
 
-
   checkForHorizontalCollision() {
     for (let i = 0; i < this.collidableBlocks.length; i++) {
       const collidableBlock = this.collidableBlocks[i]
@@ -177,7 +176,6 @@ class Player extends Sprite {
     }
   }
 
-
   switchSprite(key) {
     if (this.image === this.animations[key] && !this.loaded) return
 
@@ -185,8 +183,6 @@ class Player extends Sprite {
     this.frameBuffer = this.animations[key].frameBuffer
     this.frameRate = this.animations[key].frameRate
   }
-
-
 
   updateHitbox() {
     this.hitbox = {
@@ -219,5 +215,16 @@ class Player extends Sprite {
     if (this.hitbox.position.y + this.hitbox.height + this.velocity.y > canvas.height) this.velocity.y = 0
     if (this.hitbox.position.x + this.velocity.x <= 0) this.velocity.x = 0
     if (this.hitbox.position.x + this.hitbox.width + this.velocity.x >= canvas.width) this.velocity.x = 0
+  }
+
+
+  gameover({ camera, force }) {
+    if (this.velocity.y > 20 || force) {
+      this.position.y = 100
+      this.velocity.y = 0
+      camera.position.y = 100
+      this.collisionMap.resetMap()
+      this.collidableBlocks = this.collisionMap.collidableBlocks
+    }
   }
 }

@@ -13,6 +13,12 @@ const keys = {
   },
   w: {
     pressed: false
+  },
+  r: {
+    pressed: false
+  },
+  p: {
+    pressed: false
   }
 }
 
@@ -120,8 +126,10 @@ function animate() {
   } else if (player.velocity.y < 0) {
     player.shouldWorldExpand()
     player.shouldPanCameraDown({ canvas, camera })
-  } else if (player.velocity.y > 0) {
+  } else if (player.velocity.y > 0 || keys.r.pressed) {
     player.shouldPanCameraUp({ canvas, camera })
+
+    player.gameover({ camera, force: keys.r.pressed })
   }
 
 }

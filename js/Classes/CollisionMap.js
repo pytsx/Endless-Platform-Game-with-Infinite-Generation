@@ -8,30 +8,16 @@ class CollisionMap extends Matriz2D {
       x: this.mapWidth,
       y: 18
     })
+
     this.chunkCounter = 0
     this.collidableBlocks = []
     this.id = 0
 
-    this.get().forEach((row, y) => {
-      row.forEach((symbol, x) => {
-        // if (symbol != 0) {
-        this.collidableBlocks.push(
-          new CollisionBlock({
-            position: {
-              x: x * this.tileWidth,
-              y: y * this.tileWidth
-            },
-            symbol,
-            id: this.id
-          })
-        )
-        // }
-        this.id++
-      })
-    })
-
+    this.generateSpawner()
 
   }
+
+
 
   update() {
     this.collidableBlocks.forEach(collidableBlock => {
@@ -68,6 +54,52 @@ class CollisionMap extends Matriz2D {
     this.chunkCounter++
   }
 
+  generateSpawner() {
+    this.get().forEach((row, y) => {
+      row.forEach((symbol, x) => {
+        this.collidableBlocks.push(
+          new CollisionBlock({
+            position: {
+              x: x * this.tileWidth,
+              y: y * this.tileWidth
+            },
+            symbol,
+            id: this.id
+          })
+        )
+        this.id++
+      })
+    })
+  }
+
+  resetMap() {
+    this.clearMap()
+    this.generateSpawner()
+  }
+
+  clearMap() {
+    this.collidableBlocks = [];
+    this.id = 0;
+    this.chunkCounter = 0
+
+    this.get().forEach((row, y) => {
+      row.forEach((symbol, x) => {
+        this.collidableBlocks.push(
+          new CollisionBlock({
+            position: {
+              x: x * this.tileWidth,
+              y: y * this.tileWidth
+            },
+            symbol,
+            id: this.id
+          })
+        );
+        this.id++;
+      });
+    });
+  }
+
+
 
 
   testCollision() {
@@ -75,15 +107,10 @@ class CollisionMap extends Matriz2D {
     let numero = 0
     numero = getRandomNumber(1, 32 - 5)
 
-
     this.collidableBlocks[numero].symbol = 2
     this.collidableBlocks[numero + 1].symbol = 1
     this.collidableBlocks[numero + 2].symbol = 1
     this.collidableBlocks[numero + 3].symbol = 2
-
-
-
   }
-
 
 }
