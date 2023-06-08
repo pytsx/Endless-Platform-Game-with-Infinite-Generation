@@ -47,7 +47,7 @@ class Player extends Sprite {
 
     this.collidableBlocks = collisionMap.collidableBlocks
     this.collisionMap = collisionMap
-    this.gravity = .1
+    this.gravity = .12
   }
 
   update() {

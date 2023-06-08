@@ -14,18 +14,14 @@ class CollisionBlock {
   }
 
   draw() {
-    if (
-      this.symbol == 1
-      || this.symbol == 2
-      || this.symbol == 3
-    ) {
-
-      c.fillStyle = 'rgba(155, 155, 155, 0.5)'
-    } else {
-
-      c.fillStyle = 'rgba(0, 155, 0, 0)'
+    for (let key in ENV.collidable) {
+      const item = ENV.collidable[key]
+      if (this.symbol == item.key) {
+        c.fillStyle = item.color
+        break
+      }
     }
-    c.fillRect(this.position.x, this.position.y, this.width - 1, this.symbol == 1 ? this.height / 2 : this.height - 1)
+    c.fillRect(this.position.x, this.position.y, this.width + 1, this.symbol == 1 ? this.height / 2 : this.height + 1)
   }
 
   update() {

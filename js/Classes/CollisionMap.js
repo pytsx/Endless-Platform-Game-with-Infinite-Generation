@@ -43,10 +43,11 @@ class CollisionMap extends Matriz2D {
   genereteWorldBorder(height) {
     let newMatriz = this.newMatriz(this.mapWidth, height)
     let alturaMapa = this.collidableBlocks[this.collidableBlocks.length - 1].position.y
-    newMatriz = insertBlock(newMatriz)
+
+    newMatriz = this.insertBlock(newMatriz)
+
     newMatriz.forEach((row, y) => {
       row.forEach((symbol, x) => {
-        // if (symbol != 0) {
         this.collidableBlocks.push(
           new CollisionBlock({
             position: {
@@ -57,7 +58,6 @@ class CollisionMap extends Matriz2D {
             id: this.id
           })
         )
-        // }
         this.id++
       })
     })

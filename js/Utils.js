@@ -57,37 +57,3 @@ function getRandomNumber(min, max) {
 
   return Math.round(randomNumber)
 }
-
-function sliceMatriz(matriz) {
-  let halfIndex = getRandomNumber(2, matriz.length)
-  let firstHalf = matriz.slice(0, halfIndex)
-  let secondHalf = matriz.slice(halfIndex)
-  return {
-    firstHalf,
-    secondHalf
-  }
-}
-
-function mountHalfMatriz(half) {
-  let yNovaEntidade = getRandomNumber(0, half.length > 1 ? half.length - 1 : half.length)
-  let xNovaEntidade = getRandomNumber(2, 32 - 4)
-  // console.log('gerado: ', yNovaEntidade, ' limite: ', half.length - 1);
-
-  if (yNovaEntidade < half.length) {
-    half[yNovaEntidade][xNovaEntidade] = 2
-    half[yNovaEntidade][xNovaEntidade + 1] = 1
-    half[yNovaEntidade][xNovaEntidade + 2] = 1
-    half[yNovaEntidade][xNovaEntidade + 3] = 2
-  } else mountHalfMatriz(half)
-  return half
-}
-
-function insertBlock(matriz) {
-  let { firstHalf, secondHalf } = sliceMatriz(matriz)
-
-  firstHalf = mountHalfMatriz(firstHalf)
-  secondHalf = mountHalfMatriz(secondHalf)
-
-  let mountMatriz = [...firstHalf, ...secondHalf]
-  return mountMatriz;
-}
