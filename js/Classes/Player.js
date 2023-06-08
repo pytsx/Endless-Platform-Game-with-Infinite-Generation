@@ -5,8 +5,7 @@ class Player extends Sprite {
     frameRate,
     frameBuffer,
     scale = 1.5,
-    animations,
-    collisionMap
+    animations
   }) {
     super({ position, imageSrc, frameRate, frameBuffer, scale })
 
@@ -45,8 +44,9 @@ class Player extends Sprite {
 
     this.debug = false
 
-    this.collidableBlocks = collisionMap.collidableBlocks
-    this.collisionMap = collisionMap
+    this.collisionMap = new CollisionMap()
+    this.collisionMap.genereteChunk()
+    this.collidableBlocks = this.collisionMap.collidableBlocks
     this.gravity = .12
   }
 
@@ -223,6 +223,8 @@ class Player extends Sprite {
       camera.position.y = 100
       this.collisionMap.resetMap()
       this.collidableBlocks = this.collisionMap.collidableBlocks
+      this.switchSprite('Attack')
+
     }
   }
 }

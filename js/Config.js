@@ -28,3 +28,24 @@ const ENV = {
 }
 
 let DEBUG = false
+
+const keys = {
+  a: {
+    pressed: false
+  },
+  d: {
+    pressed: false
+  },
+  w: {
+    pressed: false
+  },
+  r: {
+    pressed: false
+  },
+  p: {
+    pressed: false
+  },
+  o: {
+    pressed: false
+  }
+}

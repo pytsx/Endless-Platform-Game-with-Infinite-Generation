@@ -76,17 +76,14 @@ function getRandomNumber(min, max) {
 
 function collidableBlocksFilter(symbol) {
   let {
-    empty,
-    first_chunk,
-    second_chunk,
     platform_border,
     platform_inside,
     world_border
   } = ENV.collidable
 
   return (
-    symbol == platform_border.key ||
-    symbol == platform_inside.key ||
-    symbol == world_border.key
+    (symbol == platform_border.key ||
+      symbol == platform_inside.key ||
+      symbol == world_border.key) || DEBUG
   )
 }
