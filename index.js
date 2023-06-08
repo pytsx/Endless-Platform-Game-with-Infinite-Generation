@@ -12,17 +12,14 @@ const camera = {
 }
 
 const jumpLimit = 2
-
 let countJump = 0
 
 let player = wizard
 
-// const background = new Sprite()
 function animate() {
   window.requestAnimationFrame(animate)
 
   // desenha canvas 
-
   c.fillStyle = '#3d3d3d'
   c.fillRect(0, 0, canvas.width, canvas.height)
 
