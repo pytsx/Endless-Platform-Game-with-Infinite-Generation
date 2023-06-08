@@ -19,9 +19,15 @@ class CollisionBlock {
       if (this.symbol == item.key) {
         c.fillStyle = item.color
         break
+      } else {
+        c.fillStyle = 'transparent'
       }
     }
+    c.font = '16px Arial'
     c.fillRect(this.position.x, this.position.y, this.width + 1, this.symbol == 1 ? this.height / 2 : this.height + 1)
+    if (DEBUG) {
+      c.fillText(this.symbol, this.position.x - 4 + this.width / 2, this.position.y + 7 + this.height / 2,)
+    }
   }
 
   update() {

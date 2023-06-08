@@ -20,6 +20,12 @@ function handleKeyup(e) {
     case 'r':
       keys.r.pressed = false
       break
+    case 'p':
+      keys.p.pressed = false
+      break
+    case 'o':
+      keys.o.pressed = false
+      break
   }
 }
 
@@ -53,16 +59,34 @@ function handleKeydown(e) {
     case 'p':
       keys.p.pressed = true
       break
+    case 'o':
+      keys.o.pressed = true
+      break
   }
 }
 
 function getRandomNumber(min, max) {
 
   const range = max - min
-
   const random = Math.random()
-
   const randomNumber = random * range + min
 
   return Math.round(randomNumber)
+}
+
+function collidableBlocksFilter(symbol) {
+  let {
+    empty,
+    first_chunk,
+    second_chunk,
+    platform_border,
+    platform_inside,
+    world_border
+  } = ENV.collidable
+
+  return (
+    symbol == platform_border.key ||
+    symbol == platform_inside.key ||
+    symbol == world_border.key
+  )
 }

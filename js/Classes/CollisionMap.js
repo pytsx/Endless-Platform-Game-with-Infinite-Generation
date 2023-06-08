@@ -23,7 +23,6 @@ class CollisionMap extends Matriz2D {
     this.collidableBlocks.forEach(collidableBlock => {
       collidableBlock.update()
     })
-    this.testCollision()
   }
 
   genereteWorldBorder(height) {
@@ -34,17 +33,19 @@ class CollisionMap extends Matriz2D {
 
     newMatriz.forEach((row, y) => {
       row.forEach((symbol, x) => {
-        this.collidableBlocks.push(
-          new CollisionBlock({
-            position: {
-              x: x * this.tileWidth,
-              y: -(y * this.tileWidth) - (this.chunkCounter == 0 ? 0 : Math.abs(alturaMapa)) - this.tileWidth
-            },
-            symbol,
-            id: this.id
-          })
-        )
-        this.id++
+        if (collidableBlocksFilter(symbol)) {
+          this.collidableBlocks.push(
+            new CollisionBlock({
+              position: {
+                x: x * this.tileWidth,
+                y: -(y * this.tileWidth) - (this.chunkCounter == 0 ? 0 : Math.abs(alturaMapa)) - this.tileWidth
+              },
+              symbol,
+              id: this.id
+            })
+          )
+          this.id++
+        }
       })
     })
   }
@@ -57,17 +58,21 @@ class CollisionMap extends Matriz2D {
   generateSpawner() {
     this.get().forEach((row, y) => {
       row.forEach((symbol, x) => {
-        this.collidableBlocks.push(
-          new CollisionBlock({
-            position: {
-              x: x * this.tileWidth,
-              y: y * this.tileWidth
-            },
-            symbol,
-            id: this.id
-          })
-        )
-        this.id++
+
+        if (collidableBlocksFilter(symbol)) {
+
+          this.collidableBlocks.push(
+            new CollisionBlock({
+              position: {
+                x: x * this.tileWidth,
+                y: y * this.tileWidth
+              },
+              symbol,
+              id: this.id
+            })
+          )
+          this.id++
+        }
       })
     })
   }
@@ -84,33 +89,21 @@ class CollisionMap extends Matriz2D {
 
     this.get().forEach((row, y) => {
       row.forEach((symbol, x) => {
-        this.collidableBlocks.push(
-          new CollisionBlock({
-            position: {
-              x: x * this.tileWidth,
-              y: y * this.tileWidth
-            },
-            symbol,
-            id: this.id
-          })
-        );
-        this.id++;
+        if (collidableBlocksFilter(symbol)) {
+
+          this.collidableBlocks.push(
+            new CollisionBlock({
+              position: {
+                x: x * this.tileWidth,
+                y: y * this.tileWidth
+              },
+              symbol,
+              id: this.id
+            })
+          );
+          this.id++;
+        }
       });
     });
   }
-
-
-
-
-  testCollision() {
-    let chunk = 640
-    let numero = 0
-    numero = getRandomNumber(1, 32 - 5)
-
-    this.collidableBlocks[numero].symbol = 2
-    this.collidableBlocks[numero + 1].symbol = 1
-    this.collidableBlocks[numero + 2].symbol = 1
-    this.collidableBlocks[numero + 3].symbol = 2
-  }
-
 }

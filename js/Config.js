@@ -25,5 +25,6 @@ const ENV = {
       color: 'rgba(255, 255, 255, 0.5)'
     }
   },
-
 }
+
+let DEBUG = false

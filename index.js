@@ -19,6 +19,9 @@ const keys = {
   },
   p: {
     pressed: false
+  },
+  o: {
+    pressed: false
   }
 }
 
@@ -119,6 +122,12 @@ function animate() {
   } else if (player.velocity.y == 0 && player.velocity.x == 0) {
     if (player.lastDirection[player.lastDirection.length - 1] === 'right') player.switchSprite('Idle')
     else player.switchSprite('IdleLeft')
+  } else if (keys.o.pressed) {
+    player.debug = true
+    DEBUG = true
+  } else if (keys.p.pressed) {
+    player.debug = false
+    DEBUG = false
   }
 
   if (player.velocity.y == 0) {
@@ -128,7 +137,6 @@ function animate() {
     player.shouldPanCameraDown({ canvas, camera })
   } else if (player.velocity.y > 0 || keys.r.pressed) {
     player.shouldPanCameraUp({ canvas, camera })
-
     player.gameover({ camera, force: keys.r.pressed })
   }
 

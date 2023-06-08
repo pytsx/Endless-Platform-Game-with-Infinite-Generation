@@ -43,7 +43,7 @@ class Player extends Sprite {
       this.animations[key].image = image
     }
 
-    this.devtools = false
+    this.debug = false
 
     this.collidableBlocks = collisionMap.collidableBlocks
     this.collisionMap = collisionMap
@@ -52,7 +52,7 @@ class Player extends Sprite {
 
   update() {
 
-    if (this.devtools) {
+    if (this.debug) {
 
       //desenha regiçao do camerabox
       c.fillStyle = 'rgba(0, 0,255,.3)'
@@ -91,8 +91,6 @@ class Player extends Sprite {
   }
 
   shouldPanCameraDown({ camera, canvas }) {
-
-
     if (this.camerabox.position.y + camera.position.y + this.velocity.y <= 0) {
       camera.position.y -= this.velocity.y
     }
@@ -130,7 +128,7 @@ class Player extends Sprite {
         if (this.velocity.y > 0) {
           if (collidableBlock.symbol == 1) {
             setTimeout(() => {
-              collidableBlock.symbol = 0
+              collidableBlock.symbol = 6
             }, delay)
           } else if (collidableBlock.symbol == 2) {
             setTimeout(() => {

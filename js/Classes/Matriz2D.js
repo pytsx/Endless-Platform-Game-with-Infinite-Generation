@@ -1,7 +1,7 @@
 class Matriz2D {
   constructor() {
     this.matriz = []
-    // this.matrizGenerated = []
+    this.matrizGenerated = []
   }
 
   init({ x = 32, y = 18 }) {
@@ -12,6 +12,10 @@ class Matriz2D {
       } else {
         row = Array(x).fill(ENV.collidable.world_border.key)
       }
+      if (i == 2) {
+        row = Array(x).fill(ENV.collidable.platform_border.key)
+      }
+
       row[0] = ENV.collidable.world_border.key
       row[x - 1] = ENV.collidable.world_border.key
       this.matriz.push(row)
@@ -44,16 +48,17 @@ class Matriz2D {
     secondHalf = this.mountHalfMatriz(secondHalf, 2)
 
     let mountedMatriz = [...firstHalf, ...secondHalf]
-    // this.matrizGenerated.push(mountedMatriz)
+    this.matrizGenerated.push(mountedMatriz)
 
     return mountedMatriz;
   }
 
   mountHalfMatriz(half, part) {
     let length = half.length
+    let worldMarginFromBorder = 5
 
     let yNovaEntidade = getRandomNumber(0, length > 1 ? length - 1 : length)
-    let xNovaEntidade = getRandomNumber(2, 32 - 4)
+    let xNovaEntidade = getRandomNumber(2, 32 - worldMarginFromBorder)
 
     if (part == 1) {
       for (let i = 0; i < length; i++) {
