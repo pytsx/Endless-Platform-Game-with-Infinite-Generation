@@ -15,6 +15,8 @@ class CollisionMap extends Matriz2D {
 
     this.generateSpawner()
 
+    this.chunkGenerationRate = 20
+
   }
 
 

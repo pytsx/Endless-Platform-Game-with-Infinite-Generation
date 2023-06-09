@@ -4,14 +4,14 @@ class Sprite {
     imageSrc,
     frameBuffer = 10,
     frameRate = 1,
-    scale = 1
+    scale = 1,
+    animations
   }) {
     this.position = position
     this.image = new Image()
     this.image.src = imageSrc
     this.loaded = false
 
-    this.scale = scale
 
     this.frameBuffer = frameBuffer
     this.frameRate = frameRate
@@ -21,9 +21,20 @@ class Sprite {
       this.height = this.image.height * this.scale
       this.loaded = true
     }
+    this.scale = scale
 
     this.currentFrame = 0
     this.elapseFrame = 0
+
+    this.animations = animations
+    for (let key in this.animations) {
+      const image = new Image()
+      image.src = this.animations[key].imageSrc
+
+
+
+      this.animations[key].image = image
+    }
   }
 
   draw() {
@@ -62,4 +73,17 @@ class Sprite {
     }
     this.elapseFrame++
   }
+
+  switchSprite(key) {
+    if (this.image === this.animations[key] && !this.loaded) return
+
+    this.image = this.animations[key].image
+    this.frameBuffer = this.animations[key].frameBuffer
+    this.frameRate = this.animations[key].frameRate
+
+    if (this.animations[key].scale) {
+      this.scale = this.animations[key].scale
+    }
+  }
+
 }

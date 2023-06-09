@@ -23,6 +23,18 @@ const ENV = {
     second_chunk: {
       key: 5,
       color: 'rgba(255, 255, 255, 0.5)'
+    },
+    coins: {
+      key: 6,
+      color: 'rgba(245,205,39, 1)'
+    },
+    null: {
+      key: 100,
+      color: 'rgba(0,0,0,0)'
+    },
+    explosion: {
+      key: -1,
+      color: 'rgba(0,0,0,0)'
     }
   },
 }

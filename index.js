@@ -11,11 +11,58 @@ const camera = {
   }
 }
 
+
+
+
+
+const wizard_ia = new GameEntity(
+  {
+    position: {
+      x: 150,
+      y: 250
+    },
+    imageSrc: './Sprites/Idle.png',
+    frameRate: 8,
+    frameBuffer: 15,
+    velocity: {
+      x: 0,
+      y: 1
+    },
+    collisionMap
+  }
+)
+
+const coin = new GameObject({
+  id: 159,
+  position: {
+    x: 50,
+    y: 200
+  },
+  env: ENV.collidable.coins,
+  sprite: {
+    imageSrc: './Sprites/coin.png',
+    frameBuffer: 16,
+    frameRate: 7,
+    scale: .2,
+    animations: {
+      Coin: {
+        imageSrc: './Sprites/coin.png',
+        frameBuffer: 16,
+        frameRate: 7,
+        scale: .2
+      },
+    }
+  },
+})
+
+
+
 const jumpLimit = 2
 let countJump = 0
 
 let player = wizard
 
+const coins = [coin]
 function animate() {
   window.requestAnimationFrame(animate)
 
@@ -27,9 +74,16 @@ function animate() {
 
   c.translate(0, camera.position.y)
 
+  coin.update()
+
+  wizard_ia.update()
+  wizard_ia.checkForCanvasCollision({ canvas })
+
   player.collisionMap.update()
   player.update()
   player.checkForCanvasCollision({ canvas })
+
+  player.checkForCoinCollision({ coins })
 
   c.restore()
 

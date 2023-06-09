@@ -7,6 +7,7 @@ const wizard = new Player(
     imageSrc: './Sprites/Idle.png',
     frameRate: 8,
     frameBuffer: 15,
+    collisionMap,
     animations: {
       Idle: {
         imageSrc: './Sprites/Idle.png',
