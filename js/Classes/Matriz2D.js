@@ -2,6 +2,7 @@ class Matriz2D {
   constructor() {
     this.matriz = []
     this.matrizGenerated = []
+    this.blocksGenerated = []
   }
 
   init({ x = 32, y = 18 }) {
@@ -44,8 +45,8 @@ class Matriz2D {
   insertBlock(matriz) {
     let { firstHalf, secondHalf } = this.sliceMatriz(matriz)
 
-    firstHalf = this.mountHalfMatriz(firstHalf, 1)
-    secondHalf = this.mountHalfMatriz(secondHalf, 2)
+    firstHalf = this.mountHalfMatriz(firstHalf)
+    secondHalf = this.mountHalfMatriz(secondHalf)
 
     let mountedMatriz = [...firstHalf, ...secondHalf]
     this.matrizGenerated.push(mountedMatriz)
@@ -53,43 +54,104 @@ class Matriz2D {
     return mountedMatriz;
   }
 
-  mountHalfMatriz(half, part) {
-    let length = half.length
-    let worldMarginFromBorder = 5
+  mountHalfMatriz(halfMatriz) {
 
-    let yNovaEntidade = getRandomNumber(0, length > 1 ? length - 1 : length)
-    let xNovaEntidade = getRandomNumber(2, 32 - worldMarginFromBorder)
+    halfMatriz = this.insertNewPlatform(halfMatriz)
 
-    if (part == 1) {
-      for (let i = 0; i < length; i++) {
-        let row = half[i]
-        for (let j = 0; j < row.length; j++) {
-          let symbol = row[j]
-          if (symbol == 0) {
-            half[i][j] = ENV.collidable.first_chunk.key
-          }
-        }
+    return halfMatriz
+  }
+
+  insertNewPlatform(matriz) {
+    let matrizLength = matriz.length
+    let rowLength = matriz[0].length
+
+    let structure1 = [2, 1, 1, 2]
+    let structure2 = [1, 1, 1, 1]
+    let structure3 = [1, 2, 2, 1]
+    let structure4 = [2, 2]
+    let structure5 = [2]
+    let structure6 = [1]
+
+    // MARGIN AND PADDING
+    let worldPadding = 2
+    let marginRight = structure1.length + worldPadding
+
+    let xMinIndex = worldPadding
+    let yMinIndex = worldPadding
+
+    let xMaxIndex = rowLength - marginRight
+
+    let yMaxIndex = matrizLength - worldPadding
+
+    let yNewBlockIndex = getRandomNumber(yMinIndex, yMaxIndex)
+    let xNewBlockIndex = getRandomNumber(xMinIndex, xMaxIndex)
+
+    let randomAppear = this.blocksGenerated % 100 == 0
+
+    let level1 = this.blocksGenerated < 100
+    let level2 = this.blocksGenerated < 200
+    let level3 = this.blocksGenerated < 300
+    let level4 = this.blocksGenerated < 400
+    let level5 = this.blocksGenerated < 500
+    let level6 = this.blocksGenerated > 500
+
+    let structure = level1
+      ? structure1
+      : level2
+        ? structure2
+        : level3
+          ? structure3
+          : level4
+            ? structure4
+            : level5
+              ? structure5
+              : level6
+                ? structure6
+                : structure1
+
+    matriz = this.replaceMultipleCoordanate({
+      structure,
+      matriz,
+      position: {
+        x: xNewBlockIndex,
+        y: yNewBlockIndex
       }
-    } else if (part == 2) {
-      for (let i = 0; i < length; i++) {
-        let row = half[i]
-        for (let j = 0; j < row.length; j++) {
-          let symbol = row[j]
-          if (symbol == 0) {
-            half[i][j] = ENV.collidable.second_chunk.key
-          }
-        }
-      }
+    })
+
+
+    return matriz
+  }
+
+  replaceMultipleCoordanate({
+    structure,
+    matriz,
+    position
+  }) {
+    const length = structure.length
+
+    for (let i = 0; i < length; i++) {
+      const newSymbol = structure[i]
+
+      matriz = this.replaceCoordanate({
+        matriz,
+        x: position.x + i,
+        y: position.y,
+        newSymbol
+      })
     }
 
-    if (yNovaEntidade < length && yNovaEntidade > 2 && yNovaEntidade < (length - 2)) {
-      half[yNovaEntidade][xNovaEntidade] = ENV.collidable.platform_border.key
-      half[yNovaEntidade][xNovaEntidade + 1] = ENV.collidable.platform_inside.key
-      half[yNovaEntidade][xNovaEntidade + 2] = ENV.collidable.platform_inside.key
-      half[yNovaEntidade][xNovaEntidade + 3] = ENV.collidable.platform_border.key
-    } else this.mountHalfMatriz(half, part)
-    return half
+    return matriz
+
   }
+
+  replaceCoordanate({ matriz, x, y, newSymbol }) {
+    matriz[y][x] = newSymbol
+    this.blocksGenerated++
+
+    return matriz
+  }
+
+
 
   sliceMatriz(matriz) {
     let halfIndex = matriz.length / 2

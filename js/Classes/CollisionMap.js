@@ -27,7 +27,7 @@ class CollisionMap extends Matriz2D {
     })
   }
 
-  genereteWorldBorder(height) {
+  createNewChunk(height) {
     let newMatriz = this.newMatriz(this.mapWidth, height)
     let alturaMapa = this.collidableBlocks[this.collidableBlocks.length - 1].position.y
 
@@ -53,7 +53,7 @@ class CollisionMap extends Matriz2D {
   }
 
   genereteChunk() {
-    this.genereteWorldBorder(20)
+    this.createNewChunk(20)
     this.chunkCounter++
   }
 

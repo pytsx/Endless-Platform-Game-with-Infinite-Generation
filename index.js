@@ -12,9 +12,6 @@ const camera = {
 }
 
 
-
-
-
 const wizard_ia = new GameEntity(
   {
     position: {
@@ -32,26 +29,35 @@ const wizard_ia = new GameEntity(
   }
 )
 
-const coin = new GameObject({
+class Coin extends GameObject {
+  constructor({ position, id }) {
+    super({
+      id,
+      position,
+      env: ENV.collidable.coins,
+      sprite: {
+        imageSrc: './Sprites/coin.png',
+        frameBuffer: 16,
+        frameRate: 7,
+        scale: .2,
+        animations: {
+          Coin: {
+            imageSrc: './Sprites/coin.png',
+            frameBuffer: 16,
+            frameRate: 7,
+            scale: .2
+          },
+        }
+      },
+    })
+  }
+}
+
+const coin = new Coin({
   id: 159,
   position: {
     x: 50,
     y: 200
-  },
-  env: ENV.collidable.coins,
-  sprite: {
-    imageSrc: './Sprites/coin.png',
-    frameBuffer: 16,
-    frameRate: 7,
-    scale: .2,
-    animations: {
-      Coin: {
-        imageSrc: './Sprites/coin.png',
-        frameBuffer: 16,
-        frameRate: 7,
-        scale: .2
-      },
-    }
   },
 })
 
@@ -116,7 +122,7 @@ function animate() {
 
   } else if (player.velocity.y > 0 || keys.r.pressed) {
     player.shouldPanCameraUp({ canvas, camera })
-    player.gameover({ camera, force: keys.r.pressed })
+    // player.gameover({ camera, force: keys.r.pressed })
   }
 
 }

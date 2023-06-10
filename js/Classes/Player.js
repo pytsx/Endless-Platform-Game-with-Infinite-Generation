@@ -55,6 +55,7 @@ class Player extends GameEntity {
         object2: coin
       })) {
         coin.symbol = ENV.collidable.explosion.key
+        this.velocity.y = -50
       }
     }
   }
