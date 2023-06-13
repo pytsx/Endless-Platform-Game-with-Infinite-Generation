@@ -19,6 +19,10 @@ class GameObject extends CollisionBlock {
     )
   }
 
+  effect({ player }) {
+    // player.velocity.y = -40
+  }
+
   update() {
     if (this.symbol == ENV.collidable.null) return
 

@@ -7,7 +7,7 @@ function collision({ object1, object2 }) {
   )
 }
 
-function coinCollision({ object1, object2 }) {
+function objCollision({ object1, object2 }) {
   return (
     object1.position.y + object1.height >= object2.position.y &&
     object1.position.y <= object2.position.y + object2.height &&
@@ -15,6 +15,8 @@ function coinCollision({ object1, object2 }) {
     object1.position.x + object1.width >= object2.position.x
   )
 }
+
+
 
 function handleKeyup(e) {
   const { key } = e
@@ -48,6 +50,7 @@ function handleKeydown(e) {
       keys.d.pressed = true
       break;
     case 'w':
+
       if (countJump < jumpLimit - 1) {
         player.velocity.y = -8
         player.position.y -= 8
@@ -87,12 +90,19 @@ function collidableBlocksFilter(symbol) {
   let {
     platform_border,
     platform_inside,
-    world_border
+    world_border,
+    coins,
+    potion
   } = ENV.collidable
 
   return (
-    (symbol == platform_border.key ||
+    (
+      symbol == platform_border.key ||
       symbol == platform_inside.key ||
-      symbol == world_border.key) || DEBUG
+      symbol == world_border.key ||
+      symbol == coins.key ||
+      symbol == potion.key
+    ) ||
+    DEBUG
   )
 }

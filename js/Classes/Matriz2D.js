@@ -55,26 +55,66 @@ class Matriz2D {
   }
 
   mountHalfMatriz(halfMatriz) {
+    const platformStructure = this.defineRandomStructure({
+      structures: [
+        [2, 1, 1, 2],
+        [1, 1, 1, 1],
+        [1, 2, 2, 1],
+        [2, 2],
+        [2],
+        [1],
+        [6, 6, 6, 6, 6, 6],
+        [6, 6, 6, 6, 6, 6],
+      ]
+    })
+    const coinStructure = this.defineRandomStructure({
+      structures: [
+        [0],
+        [6, 6, 6, 6, 6, 6],
+        [6, 6, 6],
+        [6],
+        [6],
+        [6],
+        [6],
+        [6],
+        [6],
+        [6, 6, 6],
+        [6],
+      ]
+    })
 
-    halfMatriz = this.insertNewPlatform(halfMatriz)
+    const potionStructure = this.defineRandomStructure({
+      structures: [
+        [0],
+        [7],
+        [7],
+      ]
+    })
 
-    return halfMatriz
+    let matrizWithPlatform = this.insertNewStructure({ matriz: halfMatriz, structure: platformStructure })
+    let matrizWithCoin = this.insertNewStructure({ matriz: matrizWithPlatform, structure: coinStructure })
+    let matrizWithPotion = this.insertNewStructure({ matriz: matrizWithCoin, structure: potionStructure })
+
+    return matrizWithPotion
   }
 
-  insertNewPlatform(matriz) {
+  defineRandomStructure({ structures }) {
+    let randomNumber = getRandomNumber(0, 30) // Gerar um número aleatório entre 0 e 100
+
+    if (randomNumber < structures.length - 1) {
+      return structures[randomNumber]
+    } else {
+      return structures[0]
+    }
+  }
+
+  insertNewStructure({ matriz, structure }) {
     let matrizLength = matriz.length
     let rowLength = matriz[0].length
 
-    let structure1 = [2, 1, 1, 2]
-    let structure2 = [1, 1, 1, 1]
-    let structure3 = [1, 2, 2, 1]
-    let structure4 = [2, 2]
-    let structure5 = [2]
-    let structure6 = [1]
-
     // MARGIN AND PADDING
     let worldPadding = 2
-    let marginRight = structure1.length + worldPadding
+    let marginRight = structure.length + worldPadding
 
     let xMinIndex = worldPadding
     let yMinIndex = worldPadding
@@ -86,29 +126,6 @@ class Matriz2D {
     let yNewBlockIndex = getRandomNumber(yMinIndex, yMaxIndex)
     let xNewBlockIndex = getRandomNumber(xMinIndex, xMaxIndex)
 
-    let randomAppear = this.blocksGenerated % 100 == 0
-
-    let level1 = this.blocksGenerated < 100
-    let level2 = this.blocksGenerated < 200
-    let level3 = this.blocksGenerated < 300
-    let level4 = this.blocksGenerated < 400
-    let level5 = this.blocksGenerated < 500
-    let level6 = this.blocksGenerated > 500
-
-    let structure = level1
-      ? structure1
-      : level2
-        ? structure2
-        : level3
-          ? structure3
-          : level4
-            ? structure4
-            : level5
-              ? structure5
-              : level6
-                ? structure6
-                : structure1
-
     matriz = this.replaceMultipleCoordanate({
       structure,
       matriz,
@@ -117,7 +134,6 @@ class Matriz2D {
         y: yNewBlockIndex
       }
     })
-
 
     return matriz
   }
@@ -145,7 +161,14 @@ class Matriz2D {
   }
 
   replaceCoordanate({ matriz, x, y, newSymbol }) {
-    matriz[y][x] = newSymbol
+    if (matriz[y][x] == 0) {
+
+      matriz[y][x] = newSymbol
+    } else {
+      y += 1
+      matriz[y][x] = newSymbol
+
+    }
     this.blocksGenerated++
 
     return matriz

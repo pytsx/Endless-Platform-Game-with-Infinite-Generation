@@ -9,7 +9,6 @@ class GameEntity extends Sprite {
       animations,
 
       velocity,
-      collidableBlocks,
       collisionMap
     }
   ) {
@@ -52,6 +51,7 @@ class GameEntity extends Sprite {
 
 
   update() {
+    this.collisionMap.update()
     if (this.debug) {
       //desenha regiçao do hitbox
       c.fillStyle = 'rgba(155, 0,0,0.2)'
@@ -77,6 +77,7 @@ class GameEntity extends Sprite {
     this.checkForHorizontalCollision()
     this.applyGravity()
     this.updateHitbox()
+    this.checkForObjectCollision()
     this.checkForVerticalCollision()
   }
 
@@ -88,6 +89,27 @@ class GameEntity extends Sprite {
       },
       width: 500,
       height: 400
+    }
+  }
+
+  checkForObjectCollision() {
+    for (let i = 0; i < this.collidableBlocks.length; i++) {
+      const collidableBlock = this.collidableBlocks[i]
+      if (
+        (
+          collidableBlock.symbol == ENV.collidable.coins.key ||
+          collidableBlock.symbol == ENV.collidable.potion.key
+        )
+        && objCollision({
+          object1: this.hitbox,
+          object2: collidableBlock
+        })) {
+
+        collidableBlock.effect({ player: this })
+        collidableBlock.symbol = ENV.collidable.null.key
+
+        break
+      }
     }
   }
 

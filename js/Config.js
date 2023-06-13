@@ -28,6 +28,10 @@ const ENV = {
       key: 6,
       color: 'rgba(245,205,39, 1)'
     },
+    potion: {
+      key: 7,
+      color: 'rgba(25,205,39, 1)'
+    },
     null: {
       key: 100,
       color: 'rgba(0,0,0,0)'

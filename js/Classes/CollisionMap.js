@@ -36,16 +36,42 @@ class CollisionMap extends Matriz2D {
     newMatriz.forEach((row, y) => {
       row.forEach((symbol, x) => {
         if (collidableBlocksFilter(symbol)) {
-          this.collidableBlocks.push(
-            new CollisionBlock({
-              position: {
-                x: x * this.tileWidth,
-                y: -(y * this.tileWidth) - (this.chunkCounter == 0 ? 0 : Math.abs(alturaMapa)) - this.tileWidth
-              },
-              symbol,
-              id: this.id
-            })
-          )
+          switch (symbol) {
+            case ENV.collidable.coins.key:
+              this.collidableBlocks.push(
+                new Coin({
+                  position: {
+                    x: x * this.tileWidth,
+                    y: -(y * this.tileWidth) - (this.chunkCounter == 0 ? 0 : Math.abs(alturaMapa)) - this.tileWidth
+                  },
+                  id: this.id
+                })
+              )
+              break;
+            case ENV.collidable.potion.key:
+              this.collidableBlocks.push(
+                new Potion({
+                  position: {
+                    x: x * this.tileWidth,
+                    y: -(y * this.tileWidth) - (this.chunkCounter == 0 ? 0 : Math.abs(alturaMapa)) - this.tileWidth
+                  },
+                  id: this.id
+                })
+              )
+              break;
+            default:
+              this.collidableBlocks.push(
+                new CollisionBlock({
+                  position: {
+                    x: x * this.tileWidth,
+                    y: -(y * this.tileWidth) - (this.chunkCounter == 0 ? 0 : Math.abs(alturaMapa)) - this.tileWidth
+                  },
+                  symbol,
+                  id: this.id
+                })
+              )
+              break;
+          }
           this.id++
         }
       })
@@ -92,7 +118,6 @@ class CollisionMap extends Matriz2D {
     this.get().forEach((row, y) => {
       row.forEach((symbol, x) => {
         if (collidableBlocksFilter(symbol)) {
-
           this.collidableBlocks.push(
             new CollisionBlock({
               position: {

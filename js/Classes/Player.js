@@ -9,9 +9,9 @@ class Player extends GameEntity {
       },
       ...all
     })
-
+    this.scoreMultiplicator = 1
     this.lastDirection = ['right']
-
+    this.score = 0
   }
 
 
@@ -46,16 +46,19 @@ class Player extends GameEntity {
   }
 
 
-  checkForCoinCollision({ coins }) {
-    for (let i = 0; i < coins.length; i++) {
-      const coin = coins[i]
+  checkForGameObjectCollision({ objs }) {
 
-      if (coinCollision({
+    for (let i = 0; i < objs.length; i++) {
+      const obj = objs[i]
+
+      if (objCollision({
         object1: this.hitbox,
-        object2: coin
+        object2: obj
       })) {
-        coin.symbol = ENV.collidable.explosion.key
-        this.velocity.y = -50
+        obj.symbol = ENV.collidable.null.key
+
+        obj.effect({ player: this })
+
       }
     }
   }
@@ -70,7 +73,7 @@ class Player extends GameEntity {
       this.collisionMap.resetMap()
       this.collidableBlocks = this.collisionMap.collidableBlocks
       this.switchSprite('Attack')
-
+      this.score = 0
     }
   }
 }
