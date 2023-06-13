@@ -15,11 +15,9 @@ class CollisionMap extends Matriz2D {
 
     this.generateSpawner()
 
-    this.chunkGenerationRate = 20
+    this.chunkGenerationRate = 10
 
   }
-
-
 
   update() {
     this.collidableBlocks.forEach(collidableBlock => {
@@ -29,7 +27,9 @@ class CollisionMap extends Matriz2D {
 
   createNewChunk(height) {
     let newMatriz = this.newMatriz(this.mapWidth, height)
-    let alturaMapa = this.collidableBlocks[this.collidableBlocks.length - 1].position.y
+    let lastIndex = this.collidableBlocks.length - 1
+    let lastItem = this.collidableBlocks[lastIndex]
+    let alturaMapa = lastItem.position.y
 
     newMatriz = this.insertBlock(newMatriz)
 
