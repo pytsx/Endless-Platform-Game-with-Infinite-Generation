@@ -38,12 +38,12 @@ class Potion extends GameObject {
   effect({ player }) {
     if (this.active) {
 
-      player.scoreMultiplicator = 3
+      player.scoreMultiplicator += 3
 
       player.velocity.y += -20
       player.switchSprite('Attack')
       setTimeout(() => {
-        player.scoreMultiplicator = 1
+        player.scoreMultiplicator -= 3
       }, 10000)
       this.active = false
     }
